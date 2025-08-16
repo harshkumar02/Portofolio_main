@@ -16,7 +16,7 @@ import "aos/dist/aos.css";
 import Certificate from "../components/Certificate";
 import { Code, Award, Boxes } from "lucide-react";
 
-// Separate ShowMore/ShowLess button component
+// Toggle button for See More / See Less
 const ToggleButton = ({ onClick, isShowingMore }) => (
   <button
     onClick={onClick}
@@ -104,14 +104,11 @@ const techStacks = [
   { icon: "html.svg", language: "HTML" },
   { icon: "css.svg", language: "CSS" },
   { icon: "javascript.svg", language: "JavaScript" },
- 
-  
   { icon: "nodejs.svg", language: "Node JS" },
   { icon: "bootstrap.svg", language: "Bootstrap" },
   { icon: "firebase.svg", language: "Firebase" },
   { icon: "MUI.svg", language: "Material UI" },
   { icon: "vercel.svg", language: "Vercel" },
-  
 ];
 
 export default function FullWidthTabs() {
@@ -125,40 +122,39 @@ export default function FullWidthTabs() {
   const initialItems = isMobile ? 4 : 6;
 
   useEffect(() => {
-    // Initialize AOS once
-    AOS.init({
-      once: false, // This will make animations occur only once
-    });
+    AOS.init({ once: false });
   }, []);
 
-  const fetchData = useCallback(async () => {
-    try {
-      const projectCollection = collection(db, "projects");
-      const certificateCollection = collection(db, "certificates");
+const fetchData = useCallback(async () => {
+  try {
+    const projectCollection = collection(db, "Projects");
+    const certificateCollection = collection(db, "Certifications"); // 
 
-      const [projectSnapshot, certificateSnapshot] = await Promise.all([
-        getDocs(projectCollection),
-        getDocs(certificateCollection),
-      ]);
 
-      const projectData = projectSnapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-        TechStack: doc.data().TechStack || [],
-      }));
+    const [projectSnapshot, certificateSnapshot] = await Promise.all([
+      getDocs(projectCollection),
+      getDocs(certificateCollection),
+    ]);
 
-      const certificateData = certificateSnapshot.docs.map((doc) => doc.data());
+    const projectData = projectSnapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+      TechStack: doc.data().TechStack || [],
+    }));
 
-      setProjects(projectData);
-      setCertificates(certificateData);
+    const certificateData = certificateSnapshot.docs.map((doc) => doc.data());
 
-      // Store in localStorage
-      //localStorage.setItem("projects", JSON.stringify(projectData));
-      localStorage.setItem("certificates", JSON.stringify(certificateData));
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  }, []);
+    setProjects(projectData);
+    setCertificates(certificateData);
+
+    // ✅ Save both to localStorage
+    localStorage.setItem("projects", JSON.stringify(projectData));
+    localStorage.setItem("certificates", JSON.stringify(certificateData));
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+}, []);
+
 
   useEffect(() => {
     fetchData();
@@ -168,20 +164,20 @@ export default function FullWidthTabs() {
     setValue(newValue);
   };
 
-  //const toggleShowMore = useCallback((type) => {
-  //  if (type === 'projects') {
-  //    setShowAllProjects(prev => !prev);
-  //  } else {
-  //    setShowAllCertificates(prev => !prev);
-  //  }
-  //}, []);
+  const toggleShowMore = (type) => {
+    if (type === "projects") {
+      setShowAllProjects((prev) => !prev);
+    } else {
+      setShowAllCertificates((prev) => !prev);
+    }
+  };
 
   const displayedProjects = showAllProjects ? projects : projects.slice(0, initialItems);
   const displayedCertificates = showAllCertificates ? certificates : certificates.slice(0, initialItems);
 
   return (
     <div className="md:px-[10%] px-[5%] w-full sm:mt-0 mt-[3rem] bg-[#030014] overflow-hidden" id="Portofolio">
-      {/* Header section - unchanged */}
+      {/* Header */}
       <div className="text-center pb-10" data-aos="fade-up" data-aos-duration="1000">
         <h2 className="inline-block text-3xl md:text-5xl font-bold text-center mx-auto text-transparent bg-clip-text bg-gradient-to-r from-[#0A66C2] to-[#ffffff]">
           <span style={{
@@ -201,7 +197,7 @@ export default function FullWidthTabs() {
       </div>
 
       <Box sx={{ width: "100%" }}>
-        {/* AppBar and Tabs section - unchanged */}
+        {/* Tabs */}
         <AppBar
           position="static"
           elevation={0}
@@ -225,7 +221,6 @@ export default function FullWidthTabs() {
           }}
           className="md:px-4"
         >
-          {/* Tabs remain unchanged */}
           <Tabs
             value={value}
             onChange={handleChange}
@@ -233,66 +228,37 @@ export default function FullWidthTabs() {
             indicatorColor="secondary"
             variant="fullWidth"
             sx={{
-              // Existing styles remain unchanged
               minHeight: "70px",
               "& .MuiTab-root": {
                 fontSize: { xs: "0.9rem", md: "1rem" },
                 fontWeight: "600",
                 color: "#94a3b8",
                 textTransform: "none",
-                transition: "all 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
                 padding: "20px 0",
-                zIndex: 1,
                 margin: "8px",
                 borderRadius: "12px",
                 "&:hover": {
                   color: "#ffffff",
                   backgroundColor: "rgba(139, 92, 246, 0.1)",
-                  transform: "translateY(-2px)",
-                  "& .lucide": {
-                    transform: "scale(1.1) rotate(5deg)",
-                  },
                 },
                 "&.Mui-selected": {
                   color: "#fff",
                   background: "linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(59, 130, 246, 0.2))",
-                  boxShadow: "0 4px 15px -3px rgba(139, 92, 246, 0.2)",
-                  "& .lucide": {
-                    color: "#a78bfa",
-                  },
                 },
               },
-              "& .MuiTabs-indicator": {
-                height: 0,
-              },
-              "& .MuiTabs-flexContainer": {
-                gap: "8px",
-              },
+              "& .MuiTabs-indicator": { height: 0 },
+              "& .MuiTabs-flexContainer": { gap: "8px" },
             }}
           >
-            <Tab
-              icon={<Code className="mb-2 w-5 h-5 transition-all duration-300" />}
-              label="Projects"
-              {...a11yProps(0)}
-            />
-            <Tab
-              icon={<Award className="mb-2 w-5 h-5 transition-all duration-300" />}
-              label="Certificates"
-              {...a11yProps(1)}
-            />
-            <Tab
-              icon={<Boxes className="mb-2 w-5 h-5 transition-all duration-300" />}
-              label="Tech Stack"
-              {...a11yProps(2)}
-            />
+            <Tab icon={<Code className="mb-2 w-5 h-5" />} label="Projects" {...a11yProps(0)} />
+            <Tab icon={<Award className="mb-2 w-5 h-5" />} label="Certificates" {...a11yProps(1)} />
+            <Tab icon={<Boxes className="mb-2 w-5 h-5" />} label="Tech Stack" {...a11yProps(2)} />
           </Tabs>
         </AppBar>
 
-        <SwipeableViews
-          axis={theme.direction === "rtl" ? "x-reverse" : "x"}
-          index={value}
-          onChangeIndex={setValue}
-        >
+        {/* Content */}
+        <SwipeableViews axis={theme.direction === "rtl" ? "x-reverse" : "x"} index={value} onChangeIndex={setValue}>
+          {/* Projects without image or link */}
           <TabPanel value={value} index={0} dir={theme.direction}>
             <div className="container mx-auto flex justify-center items-center overflow-hidden">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 2xl:grid-cols-3 gap-5">
@@ -302,27 +268,24 @@ export default function FullWidthTabs() {
                     data-aos={index % 3 === 0 ? "fade-up-right" : index % 3 === 1 ? "fade-up" : "fade-up-left"}
                     data-aos-duration={index % 3 === 0 ? "1000" : index % 3 === 1 ? "1200" : "1000"}
                   >
-                    {/*<CardProject*/}
-                    {/*  Img={project.Img}*/}
-                    {/*  Title={project.Title}*/}
-                    {/*  Description={project.Description}*/}
-                    {/*  Link={project.Link}*/}
-                    {/*  id={project.id}*/}
-                    {/*/>*/}
+                    <CardProject
+                      Title={project.Title}
+                      Description={project.Description}
+                      TechStack={project.TechStack}
+                      // Removed image and link props
+                    />
                   </div>
                 ))}
               </div>
             </div>
             {projects.length > initialItems && (
               <div className="mt-6 w-full flex justify-start">
-                <ToggleButton
-                  onClick={() => toggleShowMore('projects')}
-                  isShowingMore={showAllProjects}
-                />
+                <ToggleButton onClick={() => toggleShowMore("projects")} isShowingMore={showAllProjects} />
               </div>
             )}
           </TabPanel>
 
+          {/* Certificates */}
           <TabPanel value={value} index={1} dir={theme.direction}>
             <div className="container mx-auto flex justify-center items-center overflow-hidden">
               <div className="grid grid-cols-1 md:grid-cols-3 md:gap-5 gap-4">
@@ -332,21 +295,20 @@ export default function FullWidthTabs() {
                     data-aos={index % 3 === 0 ? "fade-up-right" : index % 3 === 1 ? "fade-up" : "fade-up-left"}
                     data-aos-duration={index % 3 === 0 ? "1000" : index % 3 === 1 ? "1200" : "1000"}
                   >
-                    <Certificate ImgSertif={certificate.Img} />
+                    <Certificate ImgSertif={certificate.Img} Platform={certificate.Platform} />
+
                   </div>
                 ))}
               </div>
             </div>
             {certificates.length > initialItems && (
               <div className="mt-6 w-full flex justify-start">
-                <ToggleButton
-                  onClick={() => toggleShowMore('certificates')}
-                  isShowingMore={showAllCertificates}
-                />
+                <ToggleButton onClick={() => toggleShowMore("certificates")} isShowingMore={showAllCertificates} />
               </div>
             )}
           </TabPanel>
 
+          {/* Tech Stack */}
           <TabPanel value={value} index={2} dir={theme.direction}>
             <div className="container mx-auto flex justify-center items-center overflow-hidden pb-[5%]">
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 lg:gap-8 gap-5">
