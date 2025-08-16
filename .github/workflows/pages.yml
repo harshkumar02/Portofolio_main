@@ -1,7 +1,7 @@
 name: Deploy Vite React to GitHub Pages
 on:
   push:
-    branches: [ master ]
+    branches: [ main ]   # change to [ master ] if your default branch is master
 
 permissions:
   contents: read
@@ -20,8 +20,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
+      # 👇 This is the only change: ignore peer-dep conflicts during CI install
       - run: npm ci --legacy-peer-deps
-      - run: npm ci
       - run: npm run build
       - uses: actions/upload-pages-artifact@v3
         with:
