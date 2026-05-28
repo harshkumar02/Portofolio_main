@@ -9,8 +9,51 @@ import CardProject from "../components/CardProject";
 import TechStackIcon from "../components/TechStackIcon";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import { Code, Award, Boxes, ExternalLink, Star, GitFork, Github, Loader2 } from "lucide-react";
+import { Code, Award, Boxes, ExternalLink, Star, GitFork, Github, Loader2, Briefcase, Calendar } from "lucide-react";
 import { useGitHubRepos, useGitHubStats } from "../hooks/useGitHubRepos";
+
+// Experience data (shared with About.jsx)
+const EXPERIENCE = [
+  {
+    title: "OT Security Consultant & Pre-Sales Engineer",
+    company: "63SATS (Cybersecurity SI/MSSP)",
+    period: "May 2025 – Present",
+    highlights: [
+      "Conducting OT security assessments and vulnerability assessments for industrial clients",
+      "Preparing security proposals and RFP responses for enterprise clients",
+      "Designing tailored cybersecurity solutions for critical infrastructure",
+    ],
+  },
+  {
+    title: "Software Engineer",
+    company: "Synapsewave Innovation Pvt. Ltd. (Formerly 63Moons)",
+    period: "Jan 2025 – May 2025",
+    highlights: [
+      "Executed features and UI using C#, .NET Framework, Angular and Ionic",
+      "Created and optimized MySQL schemas and queries",
+      "Participated in sprint planning, code reviews, and release verification",
+    ],
+  },
+  {
+    title: "Software Engineer",
+    company: "63 Moons Technologies Ltd.",
+    period: "Jul 2024 – Jan 2025",
+    highlights: [
+      "Developed backend services and CRUD APIs using ASP.NET MVC and MySQL",
+      "Authored technical documentation for maintenance",
+      "Improved release stability during sprint cycles",
+    ],
+  },
+  {
+    title: "Software Developer Intern",
+    company: "RIDE EVEE",
+    period: "Sep 2023 – Jan 2024",
+    highlights: [
+      "Built frontend components with React and server-side APIs in Node.js",
+      "Planned MongoDB data models and collaborated with designers",
+    ],
+  },
+];
 
 // LinkedIn-style certificates data
 const CERTIFICATES = [
@@ -20,7 +63,7 @@ const CERTIFICATES = [
     publisher: "Anthropic",
     issueDate: "May 2026",
     credentialId: "nqm8cd8xtcgi",
-    credentialUrl: "https://www.credly.com/badges/nqm8cd8xtcgi",
+    credentialUrl: "https://verify.skilljar.com/c/nqm8cd8xtcgi",
     skills: ["Model Context Protocol"],
   },
   {
@@ -28,7 +71,7 @@ const CERTIFICATES = [
     publisher: "Anthropic",
     issueDate: "May 2026",
     credentialId: "egdaavum78hs",
-    credentialUrl: "https://www.credly.com/badges/egdaavum78hs",
+    credentialUrl: "https://verify.skilljar.com/c/egdaavum78hs",
     skills: ["Agentic AI Development"],
   },
   {
@@ -36,7 +79,7 @@ const CERTIFICATES = [
     publisher: "Anthropic",
     issueDate: "May 2026",
     credentialId: "xft9no7yqos9",
-    credentialUrl: "https://www.credly.com/badges/xft9no7yqos9",
+    credentialUrl: "https://verify.skilljar.com/c/xft9no7yqos9",
     skills: ["Claude Code Subagents"],
   },
   {
@@ -44,7 +87,7 @@ const CERTIFICATES = [
     publisher: "Anthropic",
     issueDate: "May 2026",
     credentialId: "kniyvsmtjzbg",
-    credentialUrl: "https://www.credly.com/badges/kniyvsmtjzbg",
+    credentialUrl: "https://verify.skilljar.com/c/kniyvsmtjzbg",
     skills: ["API", "Claude Skills"],
   },
   {
@@ -52,14 +95,14 @@ const CERTIFICATES = [
     publisher: "Anthropic",
     issueDate: "May 2026",
     credentialId: "xh2x2sgos4f5",
-    credentialUrl: "https://www.credly.com/badges/xh2x2sgos4f5",
+    credentialUrl: "https://verify.skilljar.com/c/xh2x2sgos4f5",
   },
   {
     title: "Certificate of Completion: Claude 101",
     publisher: "Anthropic",
     issueDate: "May 2026",
     credentialId: "kpvixoreo7jk",
-    credentialUrl: "https://www.credly.com/badges/kpvixoreo7jk",
+    credentialUrl: "https://verify.skilljar.com/c/kpvixoreo7jk",
     skills: ["Prompt Engineering"],
   },
 
@@ -457,7 +500,8 @@ export default function Portfolio() {
           >
             <Tab icon={<Code className="mb-2 w-5 h-5" />} label="Projects" {...a11yProps(0)} />
             <Tab icon={<Award className="mb-2 w-5 h-5" />} label="Certificates" {...a11yProps(1)} />
-            <Tab icon={<Boxes className="mb-2 w-5 h-5" />} label="Tech Stack" {...a11yProps(2)} />
+            <Tab icon={<Briefcase className="mb-2 w-5 h-5" />} label="Experience" {...a11yProps(2)} />
+            <Tab icon={<Boxes className="mb-2 w-5 h-5" />} label="Tech Stack" {...a11yProps(3)} />
           </Tabs>
         </AppBar>
 
@@ -589,7 +633,53 @@ export default function Portfolio() {
           )}
         </TabPanel>
 
+        {/* Experience Tab */}
         <TabPanel value={value} index={2}>
+          <div className="container mx-auto overflow-hidden pb-[5%]">
+            <div className="space-y-6 max-w-4xl mx-auto px-4 sm:px-0">
+              {EXPERIENCE.map((job, index) => {
+                const isCurrent = job.period.includes("Present");
+                return (
+                  <div
+                    key={index}
+                    className={`relative bg-gray-900/50 backdrop-blur-lg rounded-2xl p-4 sm:p-6 border-l-4 ${
+                      isCurrent ? "border-l-green-500" : "border-l-blue-500"
+                    } transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/10`}
+                    data-aos={index % 2 === 0 ? "fade-up-right" : "fade-up-left"}
+                    data-aos-duration="800"
+                  >
+                    {/* Current indicator */}
+                    {isCurrent && (
+                      <span className="absolute top-3 right-3 sm:top-4 sm:right-4 flex items-center gap-1 text-xs text-green-400 bg-green-500/20 px-2 sm:px-3 py-0.5 sm:py-1 rounded-full border border-green-500/30">
+                        <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-green-400 animate-pulse"></span>
+                        <span className="hidden sm:inline">Current</span>
+                      </span>
+                    )}
+
+                    <div className="flex flex-col gap-1 mb-3 sm:mb-4 pr-16">
+                      <h4 className="text-base sm:text-xl font-semibold text-white pr-8 sm:pr-0">{job.title}</h4>
+                      <p className="text-sm sm:text-base text-blue-400 font-medium">{job.company}</p>
+                    </div>
+                    <span className="flex items-center gap-1 text-xs sm:text-sm text-gray-400 bg-white/5 px-2 sm:px-3 py-1 rounded-full w-fit">
+                      <Calendar className="w-3 h-3 sm:w-4 sm:h-4" />
+                      {job.period}
+                    </span>
+                    <ul className="space-y-2 mt-3 sm:mt-4">
+                      {job.highlights.map((highlight, i) => (
+                        <li key={i} className="flex items-start gap-3 text-gray-300 text-xs sm:text-sm">
+                          <span className={`mt-0.5 ${isCurrent ? "text-green-400" : "text-blue-400"}`}>•</span>
+                          {highlight}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </TabPanel>
+
+        <TabPanel value={value} index={3}>
           <div className="container mx-auto flex justify-center items-center overflow-hidden pb-[5%]">
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 lg:gap-8 gap-5">
               {techStacks.map((stack, index) => (

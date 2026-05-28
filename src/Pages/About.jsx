@@ -1,58 +1,10 @@
 // src/Pages/About.jsx
 import React, { useEffect, memo, useMemo } from "react";
-import { FileText, Code, Award, Globe, ArrowUpRight, Sparkles, Server, Database, Brain, Users, GitMerge, Rocket, FileCheck, Cog, Briefcase, Calendar, MapPin, Shield, AlertTriangle, Network, FileText as FileTextIcon, Target } from "lucide-react";
+import { FileText, Code, Award, Globe, ArrowUpRight, Sparkles, Server, Database, Brain, Users, GitMerge, Rocket, FileCheck, Cog, Shield, AlertTriangle, Network, FileText as FileTextIcon, Target } from "lucide-react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import profilePic from '../assets/pic.png';
 import { useGitHubRepos } from '../hooks/useGitHubRepos';
-
-const EXPERIENCE = [
-  {
-    title: "Software Engineer",
-    company: "Synapsewave Innovation Pvt. Ltd. (Formerly 63Moons)",
-    location: "India",
-    period: "Jan 2025 – Present",
-    highlights: [
-      "Executed features and UI using C#, .NET Framework, Angular and Ionic for cross-platform clients",
-      "Created and optimized MySQL schemas and queries while integrating backend services with Firebase and third-party REST APIs",
-      "Participated in sprint planning, code reviews, and release verification, troubleshooting production defects",
-      "Contributed to multiple production releases and coordinated with product, design, and QA teams",
-    ],
-  },
-  {
-    title: "Software Engineer",
-    company: "63 Moons Technologies Ltd.",
-    location: "India",
-    period: "Jul 2024 – Jan 2025",
-    highlights: [
-      "Developed backend services and CRUD APIs using ASP.NET MVC and MySQL",
-      "Enforced feature enhancements, resolved bugs, and authored technical documentation",
-      "Aided deployments and application monitoring to improve release stability",
-    ],
-  },
-  {
-    title: "Software Developer Intern",
-    company: "RIDE EVEE",
-    location: "India",
-    period: "Sep 2023 – Jan 2024",
-    highlights: [
-      "Built frontend components and user flows with React and server-side APIs in Node.js",
-      "Planned MongoDB data models and collaborated with designers and QA",
-      "Assisted testing and bug fixes for pre-release cycles",
-    ],
-  },
-  {
-    title: "Social Media Manager (Intern)",
-    company: "Dais World",
-    location: "India",
-    period: "Jun 2023 – Aug 2023",
-    highlights: [
-      "Created visual content and social posts using Canva",
-      "Executed basic SEO and coordinated posting cadence",
-      "Supported community engagement and campaign ideation",
-    ],
-  },
-];
 
 const Header = memo(() => (
   <div className="text-center lg:mb-8 mb-2 px-[5%]">
@@ -470,48 +422,6 @@ const AboutPage = () => {
                 ))}
               </div>
             </div>
-          </div>
-        </div>
-
-        {/* Experience Section */}
-        <div className="mt-16">
-          <h3
-            className="text-2xl font-bold text-center mb-8 text-transparent bg-clip-text bg-gradient-to-r from-[#0A66C2] to-[#ffffff]"
-            data-aos="fade-up"
-          >
-            Experience
-          </h3>
-
-          <div className="space-y-6">
-            {EXPERIENCE.map((job, index) => (
-              <div
-                key={index}
-                data-aos="fade-up"
-                data-aos-delay={index * 100}
-                className="bg-gray-900/50 backdrop-blur-lg rounded-2xl p-6 border border-white/10"
-              >
-                <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-4">
-                  <div>
-                    <h4 className="text-xl font-semibold text-white">{job.title}</h4>
-                    <p className="text-blue-400 font-medium">{job.company}</p>
-                  </div>
-                  <div className="flex items-center gap-4 text-sm text-gray-400">
-                    <span className="flex items-center gap-1">
-                      <Calendar className="w-4 h-4" />
-                      {job.period}
-                    </span>
-                  </div>
-                </div>
-                <ul className="space-y-2">
-                  {job.highlights.map((highlight, i) => (
-                    <li key={i} className="flex items-start gap-3 text-gray-300 text-sm">
-                      <span className="text-blue-400 mt-1">•</span>
-                      {highlight}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
           </div>
         </div>
       </div>
