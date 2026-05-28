@@ -183,7 +183,7 @@ const Home = () => {
                 <p className="text-base md:text-lg text-gray-400 max-w-xl leading-relaxed font-light"
                   data-aos="fade-up"
                   data-aos-delay="1000">
-                  Something to write here like slogan or about!!
+                  "A ship is safe in harbor, but that's not what ships are for." - John A. Shedd. I'm a passionate frontend developer eager to set sail on new challenges and explore the vast ocean of technology. Let's connect and create something amazing together!
                 </p>
 
                 {/* Tech Stack */}

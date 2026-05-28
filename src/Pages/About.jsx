@@ -1,6 +1,6 @@
 // src/Pages/About.jsx
 import React, { useEffect, memo, useMemo } from "react";
-import { FileText, Code, Award, Globe, ArrowUpRight, Sparkles, Server, Database, Brain, Users, GitMerge, Rocket, FileCheck, Cog, Briefcase, Calendar, MapPin } from "lucide-react";
+import { FileText, Code, Award, Globe, ArrowUpRight, Sparkles, Server, Database, Brain, Users, GitMerge, Rocket, FileCheck, Cog, Briefcase, Calendar, MapPin, Shield, AlertTriangle, Network, FileText as FileTextIcon, Target } from "lucide-react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import profilePic from '../assets/pic.png';
@@ -267,9 +267,9 @@ const AboutPage = () => {
               data-aos="fade-right"
               data-aos-duration="1500"
             >
-              A Computer Science student with a strong interest in MySQL and backend development.
-              I focus on building efficient server-side solutions and strive to create robust,
-              scalable systems in every project.
+              OT Security Consultant & Pre-Sales Engineer at 63SATS (Cybersecurity SI/MSSP).
+              Specializing in industrial control systems security, threat assessment, and
+              delivering tailored cybersecurity solutions to enterprise clients.
             </p>
 
             <div className="flex flex-col lg:flex-row items-center lg:items-start gap-4 lg:gap-4 lg:px-0 w-full">
@@ -309,13 +309,105 @@ const AboutPage = () => {
           </div>
         </a>
 
-        {/* Skills Section */}
+        {/* OT Security & Cybersecurity Section */}
         <div className="mt-16">
           <h3
             className="text-2xl font-bold text-center mb-8 text-transparent bg-clip-text bg-gradient-to-r from-[#0A66C2] to-[#ffffff]"
             data-aos="fade-up"
           >
-            Key Skills
+            Cybersecurity Expertise
+          </h3>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {/* OT/ICS Security */}
+            <div data-aos="fade-up" className="bg-gray-900/50 backdrop-blur-lg rounded-2xl p-5 border border-red-500/20">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-10 h-10 rounded-full bg-red-500/20 flex items-center justify-center">
+                  <Shield className="w-5 h-5 text-red-400" />
+                </div>
+                <h4 className="text-white font-semibold">OT/ICS Security</h4>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {["Industrial Control Systems", "SCADA", "PLC Security", "Network Segmentation", "IEC 62443", "NERC CIP"].map(skill => (
+                  <span key={skill} className="px-2 py-1 text-xs rounded-full bg-red-500/20 text-red-300 border border-red-500/30">{skill}</span>
+                ))}
+              </div>
+            </div>
+
+            {/* Threat & Vulnerability */}
+            <div data-aos="fade-up" data-aos-delay="100" className="bg-gray-900/50 backdrop-blur-lg rounded-2xl p-5 border border-orange-500/20">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-10 h-10 rounded-full bg-orange-500/20 flex items-center justify-center">
+                  <AlertTriangle className="w-5 h-5 text-orange-400" />
+                </div>
+                <h4 className="text-white font-semibold">Threat & Vulnerability</h4>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {["Penetration Testing", "Vulnerability Assessment", "Risk Analysis", "Threat Modeling", "CVSS", "CVE"].map(skill => (
+                  <span key={skill} className="px-2 py-1 text-xs rounded-full bg-orange-500/20 text-orange-300 border border-orange-500/30">{skill}</span>
+                ))}
+              </div>
+            </div>
+
+            {/* Network Security */}
+            <div data-aos="fade-up" data-aos-delay="200" className="bg-gray-900/50 backdrop-blur-lg rounded-2xl p-5 border border-green-500/20">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-10 h-10 rounded-full bg-green-500/20 flex items-center justify-center">
+                  <Network className="w-5 h-5 text-green-400" />
+                </div>
+                <h4 className="text-white font-semibold">Network Security</h4>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {["Firewall Configuration", "IDS/IPS", "SIEM", "VPN", "Zero Trust", "MFA"].map(skill => (
+                  <span key={skill} className="px-2 py-1 text-xs rounded-full bg-green-500/20 text-green-300 border border-green-500/30">{skill}</span>
+                ))}
+              </div>
+            </div>
+
+            {/* Compliance & Frameworks */}
+            <div data-aos="fade-up" data-aos-delay="300" className="bg-gray-900/50 backdrop-blur-lg rounded-2xl p-5 border border-purple-500/20">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center">
+                  <FileTextIcon className="w-5 h-5 text-purple-400" />
+                </div>
+                <h4 className="text-white font-semibold">Compliance</h4>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {["ISO 27001", "NIST CSF", "SOC 2", "GDPR", "HIPAA", "PIPEDA"].map(skill => (
+                  <span key={skill} className="px-2 py-1 text-xs rounded-full bg-purple-500/20 text-purple-300 border border-purple-500/30">{skill}</span>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Pre-Sales & Consulting Skills */}
+          <div className="mt-8">
+            <h4 className="text-lg font-semibold text-center mb-6 text-gray-300" data-aos="fade-up">Pre-Sales & Consulting</h4>
+            <div className="flex flex-wrap justify-center gap-4">
+              {[
+                { icon: Target, label: "Security Assessments" },
+                { icon: FileCheck, label: "RFP/RFI Response" },
+                { icon: Users, label: "Client Engagement" },
+                { icon: Rocket, label: "Solution Architecture" },
+                { icon: Network, label: "Vendor Selection" },
+                { icon: Cog, label: "Technical Presentations" },
+              ].map(({ icon: Icon, label }) => (
+                <div key={label} data-aos="zoom-in" className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10">
+                  <Icon className="w-4 h-4 text-red-400" />
+                  <span className="text-sm text-gray-300">{label}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Development Skills Section */}
+        <div className="mt-16">
+          <h3
+            className="text-2xl font-bold text-center mb-8 text-transparent bg-clip-text bg-gradient-to-r from-[#0A66C2] to-[#ffffff]"
+            data-aos="fade-up"
+          >
+            Technical Skills
           </h3>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -328,7 +420,7 @@ const AboutPage = () => {
                 <h4 className="text-white font-semibold">Web & Frameworks</h4>
               </div>
               <div className="flex flex-wrap gap-2">
-                {["C#", ".NET", "ASP.NET", "Node.js", "JavaScript", "TypeScript", "Angular", "Ionic", "React", "HTML", "CSS"].map(skill => (
+                {["C#", ".NET", "ASP.NET", "Node.js", "JavaScript", "TypeScript", "Angular", "React", "HTML", "CSS"].map(skill => (
                   <span key={skill} className="px-2 py-1 text-xs rounded-full bg-blue-500/20 text-blue-300 border border-blue-500/30">{skill}</span>
                 ))}
               </div>
@@ -343,7 +435,7 @@ const AboutPage = () => {
                 <h4 className="text-white font-semibold">Cloud & DevOps</h4>
               </div>
               <div className="flex flex-wrap gap-2">
-                {["GCP", "Kubernetes", "Docker", "Terraform", "Qwiklabs"].map(skill => (
+                {["GCP", "Kubernetes", "Docker", "Terraform", "CI/CD", "Linux"].map(skill => (
                   <span key={skill} className="px-2 py-1 text-xs rounded-full bg-green-500/20 text-green-300 border border-green-500/30">{skill}</span>
                 ))}
               </div>
@@ -358,7 +450,7 @@ const AboutPage = () => {
                 <h4 className="text-white font-semibold">Databases</h4>
               </div>
               <div className="flex flex-wrap gap-2">
-                {["MySQL", "MongoDB", "Firebase", "SQL"].map(skill => (
+                {["MySQL", "MongoDB", "Firebase", "SQL", "PostgreSQL"].map(skill => (
                   <span key={skill} className="px-2 py-1 text-xs rounded-full bg-yellow-500/20 text-yellow-300 border border-yellow-500/30">{skill}</span>
                 ))}
               </div>
@@ -373,30 +465,10 @@ const AboutPage = () => {
                 <h4 className="text-white font-semibold">Analytics & AI</h4>
               </div>
               <div className="flex flex-wrap gap-2">
-                {["Python", "TensorFlow"].map(skill => (
+                {["Python", "TensorFlow", "Data Analysis", "ML"].map(skill => (
                   <span key={skill} className="px-2 py-1 text-xs rounded-full bg-purple-500/20 text-purple-300 border border-purple-500/30">{skill}</span>
                 ))}
               </div>
-            </div>
-          </div>
-
-          {/* Core Competencies */}
-          <div className="mt-8">
-            <h4 className="text-lg font-semibold text-center mb-6 text-gray-300" data-aos="fade-up">Core Competencies</h4>
-            <div className="flex flex-wrap justify-center gap-4">
-              {[
-                { icon: Code, label: "Full-Stack Development" },
-                { icon: Rocket, label: "Production Release Management" },
-                { icon: Users, label: "Code Reviews" },
-                { icon: FileCheck, label: "Proposal Writing" },
-                { icon: GitMerge, label: "Sprint Planning" },
-                { icon: Cog, label: "Automation" },
-              ].map(({ icon: Icon, label }) => (
-                <div key={label} data-aos="zoom-in" className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10">
-                  <Icon className="w-4 h-4 text-blue-400" />
-                  <span className="text-sm text-gray-300">{label}</span>
-                </div>
-              ))}
             </div>
           </div>
         </div>
