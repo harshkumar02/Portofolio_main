@@ -18,9 +18,6 @@ const CONFIG = {
   SUPPORTED_TYPES: ['image/png', 'image/jpeg', 'image/jpg', 'image/gif', 'application/pdf']
 };
 
-const SERVICE_ACCOUNT_KEY = {
- 
-}
 
 // ============================================
 // MAIN FUNCTIONS
