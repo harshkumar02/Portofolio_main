@@ -161,7 +161,7 @@ const WelcomeScreen = ({ onLoadingComplete }) => {
                   <div className="relative flex items-center gap-2 text-lg sm:text-xl md:text-2xl">
                     <Globe className="w-4 h-4 sm:w-5 sm:h-5 text-indigo-600" />
                     <span className="bg-gradient-to-r from-indigo-600 to-blue-600 bg-clip-text text-transparent">
-                      <TypewriterEffect text="www.google.com" />
+                      <TypewriterEffect text="harsh-portfolio.pages.dev" />
                     </span>
                   </div>
                 </a>

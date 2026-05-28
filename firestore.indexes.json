@@ -1,0 +1,12 @@
+{
+  "indexes": [
+    {
+      "collectionGroup": "portfolio-comments",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "createdAt", "order": "DESCENDING" }
+      ]
+    }
+  ],
+  "fieldOverrides": []
+}

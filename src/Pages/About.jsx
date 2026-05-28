@@ -1,9 +1,58 @@
 // src/Pages/About.jsx
 import React, { useEffect, memo, useMemo } from "react";
-import { FileText, Code, Award, Globe, ArrowUpRight, Sparkles } from "lucide-react";
+import { FileText, Code, Award, Globe, ArrowUpRight, Sparkles, Server, Database, Brain, Users, GitMerge, Rocket, FileCheck, Cog, Briefcase, Calendar, MapPin } from "lucide-react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import profilePic from '../assets/pic.png';
+import { useGitHubRepos } from '../hooks/useGitHubRepos';
+
+const EXPERIENCE = [
+  {
+    title: "Software Engineer",
+    company: "Synapsewave Innovation Pvt. Ltd. (Formerly 63Moons)",
+    location: "India",
+    period: "Jan 2025 – Present",
+    highlights: [
+      "Executed features and UI using C#, .NET Framework, Angular and Ionic for cross-platform clients",
+      "Created and optimized MySQL schemas and queries while integrating backend services with Firebase and third-party REST APIs",
+      "Participated in sprint planning, code reviews, and release verification, troubleshooting production defects",
+      "Contributed to multiple production releases and coordinated with product, design, and QA teams",
+    ],
+  },
+  {
+    title: "Software Engineer",
+    company: "63 Moons Technologies Ltd.",
+    location: "India",
+    period: "Jul 2024 – Jan 2025",
+    highlights: [
+      "Developed backend services and CRUD APIs using ASP.NET MVC and MySQL",
+      "Enforced feature enhancements, resolved bugs, and authored technical documentation",
+      "Aided deployments and application monitoring to improve release stability",
+    ],
+  },
+  {
+    title: "Software Developer Intern",
+    company: "RIDE EVEE",
+    location: "India",
+    period: "Sep 2023 – Jan 2024",
+    highlights: [
+      "Built frontend components and user flows with React and server-side APIs in Node.js",
+      "Planned MongoDB data models and collaborated with designers and QA",
+      "Assisted testing and bug fixes for pre-release cycles",
+    ],
+  },
+  {
+    title: "Social Media Manager (Intern)",
+    company: "Dais World",
+    location: "India",
+    period: "Jun 2023 – Aug 2023",
+    highlights: [
+      "Created visual content and social posts using Canva",
+      "Executed basic SEO and coordinated posting cadence",
+      "Supported community engagement and campaign ideation",
+    ],
+  },
+];
 
 const Header = memo(() => (
   <div className="text-center lg:mb-8 mb-2 px-[5%]">
@@ -118,11 +167,11 @@ const StatCard = memo(({ icon: Icon, color, value, label, description, animation
 // =====================
 
 const AboutPage = () => {
-  // Derived numbers from localStorage + experience calc
-  const { totalProjects, totalCertificates, YearExperience } = useMemo(() => {
-    const storedProjects = JSON.parse(localStorage.getItem("projects") || "[]");
-    const storedCertificates = JSON.parse(localStorage.getItem("certificates") || "[]");
+  // Get GitHub repos data for project count
+  const { repos } = useGitHubRepos();
 
+  // Derived numbers from actual data sources
+  const { totalProjects, totalCertificates, YearExperience } = useMemo(() => {
     const startDate = new Date("2022-02-12");
     const today = new Date();
     const experience =
@@ -131,11 +180,11 @@ const AboutPage = () => {
       (today < new Date(today.getFullYear(), startDate.getMonth(), startDate.getDate()) ? 1 : 0);
 
     return {
-      totalProjects: storedProjects.length,
-      totalCertificates: storedCertificates.length,
+      totalProjects: repos.length, // Count from GitHub API
+      totalCertificates: 28, // Total certificates added
       YearExperience: experience,
     };
-  }, []);
+  }, [repos]);
 
   // AOS init + light re-init on resize
   useEffect(() => {
@@ -237,7 +286,7 @@ const AboutPage = () => {
                 </button>
               </a>
 
-              <a href="#Portofolio" className="w-full lg:w-auto">
+              <a href="#Portfolio" className="w-full lg:w-auto">
                 <button
                   data-aos="fade-up"
                   data-aos-duration="1000"
@@ -252,13 +301,147 @@ const AboutPage = () => {
           <ProfileImage />
         </div>
 
-        <a href="#Portofolio">
+        <a href="#Portfolio">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-16 cursor-pointer">
             {statsData.map((stat) => (
               <StatCard key={stat.label} {...stat} />
             ))}
           </div>
         </a>
+
+        {/* Skills Section */}
+        <div className="mt-16">
+          <h3
+            className="text-2xl font-bold text-center mb-8 text-transparent bg-clip-text bg-gradient-to-r from-[#0A66C2] to-[#ffffff]"
+            data-aos="fade-up"
+          >
+            Key Skills
+          </h3>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {/* Web & Frameworks */}
+            <div data-aos="fade-up" className="bg-gray-900/50 backdrop-blur-lg rounded-2xl p-5 border border-white/10">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center">
+                  <Code className="w-5 h-5 text-blue-400" />
+                </div>
+                <h4 className="text-white font-semibold">Web & Frameworks</h4>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {["C#", ".NET", "ASP.NET", "Node.js", "JavaScript", "TypeScript", "Angular", "Ionic", "React", "HTML", "CSS"].map(skill => (
+                  <span key={skill} className="px-2 py-1 text-xs rounded-full bg-blue-500/20 text-blue-300 border border-blue-500/30">{skill}</span>
+                ))}
+              </div>
+            </div>
+
+            {/* Cloud & DevOps */}
+            <div data-aos="fade-up" data-aos-delay="100" className="bg-gray-900/50 backdrop-blur-lg rounded-2xl p-5 border border-white/10">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-10 h-10 rounded-full bg-green-500/20 flex items-center justify-center">
+                  <Server className="w-5 h-5 text-green-400" />
+                </div>
+                <h4 className="text-white font-semibold">Cloud & DevOps</h4>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {["GCP", "Kubernetes", "Docker", "Terraform", "Qwiklabs"].map(skill => (
+                  <span key={skill} className="px-2 py-1 text-xs rounded-full bg-green-500/20 text-green-300 border border-green-500/30">{skill}</span>
+                ))}
+              </div>
+            </div>
+
+            {/* Databases */}
+            <div data-aos="fade-up" data-aos-delay="200" className="bg-gray-900/50 backdrop-blur-lg rounded-2xl p-5 border border-white/10">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-10 h-10 rounded-full bg-yellow-500/20 flex items-center justify-center">
+                  <Database className="w-5 h-5 text-yellow-400" />
+                </div>
+                <h4 className="text-white font-semibold">Databases</h4>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {["MySQL", "MongoDB", "Firebase", "SQL"].map(skill => (
+                  <span key={skill} className="px-2 py-1 text-xs rounded-full bg-yellow-500/20 text-yellow-300 border border-yellow-500/30">{skill}</span>
+                ))}
+              </div>
+            </div>
+
+            {/* Analytics & AI */}
+            <div data-aos="fade-up" data-aos-delay="300" className="bg-gray-900/50 backdrop-blur-lg rounded-2xl p-5 border border-white/10">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center">
+                  <Brain className="w-5 h-5 text-purple-400" />
+                </div>
+                <h4 className="text-white font-semibold">Analytics & AI</h4>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {["Python", "TensorFlow"].map(skill => (
+                  <span key={skill} className="px-2 py-1 text-xs rounded-full bg-purple-500/20 text-purple-300 border border-purple-500/30">{skill}</span>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Core Competencies */}
+          <div className="mt-8">
+            <h4 className="text-lg font-semibold text-center mb-6 text-gray-300" data-aos="fade-up">Core Competencies</h4>
+            <div className="flex flex-wrap justify-center gap-4">
+              {[
+                { icon: Code, label: "Full-Stack Development" },
+                { icon: Rocket, label: "Production Release Management" },
+                { icon: Users, label: "Code Reviews" },
+                { icon: FileCheck, label: "Proposal Writing" },
+                { icon: GitMerge, label: "Sprint Planning" },
+                { icon: Cog, label: "Automation" },
+              ].map(({ icon: Icon, label }) => (
+                <div key={label} data-aos="zoom-in" className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10">
+                  <Icon className="w-4 h-4 text-blue-400" />
+                  <span className="text-sm text-gray-300">{label}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Experience Section */}
+        <div className="mt-16">
+          <h3
+            className="text-2xl font-bold text-center mb-8 text-transparent bg-clip-text bg-gradient-to-r from-[#0A66C2] to-[#ffffff]"
+            data-aos="fade-up"
+          >
+            Experience
+          </h3>
+
+          <div className="space-y-6">
+            {EXPERIENCE.map((job, index) => (
+              <div
+                key={index}
+                data-aos="fade-up"
+                data-aos-delay={index * 100}
+                className="bg-gray-900/50 backdrop-blur-lg rounded-2xl p-6 border border-white/10"
+              >
+                <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-4">
+                  <div>
+                    <h4 className="text-xl font-semibold text-white">{job.title}</h4>
+                    <p className="text-blue-400 font-medium">{job.company}</p>
+                  </div>
+                  <div className="flex items-center gap-4 text-sm text-gray-400">
+                    <span className="flex items-center gap-1">
+                      <Calendar className="w-4 h-4" />
+                      {job.period}
+                    </span>
+                  </div>
+                </div>
+                <ul className="space-y-2">
+                  {job.highlights.map((highlight, i) => (
+                    <li key={i} className="flex items-start gap-3 text-gray-300 text-sm">
+                      <span className="text-blue-400 mt-1">•</span>
+                      {highlight}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
 
       {/* Standard <style> works in Vite/React; styled-jsx does not */}

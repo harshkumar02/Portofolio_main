@@ -1,0 +1,65 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    // Projects - Public read, no client writes (admin only via Firebase Console)
+    match /Projects/{document} {
+      allow read: if true;
+      allow write: if false; // Only via Firebase Console
+    }
+
+    // Certifications - Public read, no client writes (admin only via Firebase Console)
+    match /Certifications/{document} {
+      allow read: if true;
+      allow write: if false; // Only via Firebase Console
+    }
+
+    // Comments - Public read, validated writes
+    match /portfolio-comments/{comment} {
+      // Anyone can read comments
+      allow read: if true;
+
+      // Write validation
+      allow create: if isCommentValid(request.resource.data);
+
+      // No updates or deletes from client
+      allow update, delete: if false;
+    }
+
+    // Function to validate comment data
+    function isCommentValid(data) {
+      return
+        // Content validation
+        data.content is string
+        && data.content.size() >= 1
+        && data.content.size() <= 1000
+        && data.content.matches('^[a-zA-Z0-9 .,!?\\-\\(\\)\\[\\]{}@#$%^&*+=<>:;"\'/|\\\\`_~\\n]+$')
+
+        // Username validation
+        && data.userName is string
+        && data.userName.size() >= 1
+        && data.userName.size() <= 50
+        && data.userName.matches('^[a-zA-Z0-9 _\\-\\(\\)]+$')
+
+        // Profile image is optional but must be a valid URL if present
+        && (data.profileImage == null
+            || (data.profileImage is string
+                && data.profileImage.size() <= 500))
+
+        // Must have createdAt timestamp
+        && data.createdAt is timestamp
+
+        // No harmful fields
+        && !data.keys().hasAny(['email', 'ip', 'userAgent', 'uid', 'role', 'admin']);
+    }
+  }
+}
